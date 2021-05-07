@@ -1,22 +1,21 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Routing from "./Routing";
-import {actionCategories, actionLocations, actionViewStatus} from "./actions/actions";
+import {actionCategories, actionCategoryName, actionViewStatus} from "./actions/actions";
 import {useDispatch, useSelector} from "react-redux";
-import {AppBar, makeStyles, Typography} from "@material-ui/core";
+import {AppBar} from "@material-ui/core";
 import {getButtonLiElement} from "../Utils/buttonLiElement";
 
 export default function Home(props) {
     const dispatch = useDispatch();
     const view = useSelector(state => state.view);
-    const [categoryName, setCategoryName] = useState("");
     const [categoryItems, setCategoryItems] = useState([]);
     const categories = useSelector(state => state.categories);
     const locations = useSelector(state => state.locations);
-
+    const categoryName = useSelector(state => state.categoryName);
     //To get category name and list specific locations
     const getCategory = (name) => {
         dispatch(actionViewStatus("list"))
-        setCategoryName(name);
+        dispatch(actionCategoryName(name))
         setCategoryItems(locations.filter(location => location.category == name));
     }
 
@@ -44,9 +43,14 @@ export default function Home(props) {
             dispatch(actionCategories(categories.filter(category => category.name != name)))
         }
         viewHandler("home");
+
+
     }
     const viewHandler = (view) => {
-        dispatch(actionViewStatus(view))
+        if(view=="home"){
+            dispatch(actionCategoryName(""));
+        }
+        dispatch(actionViewStatus(view));
     }
 
     return (<div>
@@ -65,7 +69,7 @@ export default function Home(props) {
                          src={require('../Style/images/logo.png')}/></div>
             </nav>
             {view == "home" || view == "list" ? <div className="main-content">
-                    <h2 className="category-title"> - Home - </h2>
+                    <h2 className="category-title"> {categoryName?"- Category : " +categoryName+" -":"- Home -"} </h2>
                     <div className="category-items">
                         {items}
                     </div>

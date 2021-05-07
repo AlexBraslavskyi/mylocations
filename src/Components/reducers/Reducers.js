@@ -1,5 +1,5 @@
 import {
-    SET_VIEW, SET_LOCATIONS, SET_CATEGORIES
+    SET_VIEW, SET_LOCATIONS, SET_CATEGORIES, SET_CATEGORY_NAME
 } from '../actions/common'
 const initState = {
     categories: [],
@@ -24,6 +24,11 @@ const Reducers =
             return {
                 ...state,
                 view: action.payload
+            }
+        }if (action.type === SET_CATEGORY_NAME) {
+            return {
+                ...state,
+                categoryName: action.payload
             }
         }
         else {

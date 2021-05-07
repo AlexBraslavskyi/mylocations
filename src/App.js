@@ -4,7 +4,7 @@ import {testCategories, testLocations} from "./Config/Config";
 import Home from "./Components/Home";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
-import {actionCategories, actionLocations, actionViewStatus} from "./Components/actions/actions";
+import {actionCategories, actionCategoryName, actionLocations, actionViewStatus} from "./Components/actions/actions";
 
 
 const App = () => {
@@ -20,6 +20,7 @@ const App = () => {
         dispatch(actionCategories(testCategories));
         dispatch(actionLocations(testLocations()));
         dispatch(actionViewStatus("home"));
+        dispatch(actionCategoryName(""));
     }, []);
 
     return (

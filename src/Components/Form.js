@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {getInputElementActive} from "../Utils/inputElements";
 import _ from "lodash";
 import {useDispatch, useSelector} from "react-redux";
-import {actionCategories, actionLocations, actionViewStatus} from "./actions/actions";
+import {actionCategories, actionCategoryName, actionLocations, actionViewStatus} from "./actions/actions";
 
 export const Form = (props) => {
     const dispatch = useDispatch();
@@ -34,6 +34,7 @@ export const Form = (props) => {
         dispatch(actionCategories(newCategories));
         dispatch(actionLocations(newLocations));
         dispatch(actionViewStatus("home"));
+        dispatch(actionCategoryName(name));
 
     }
 

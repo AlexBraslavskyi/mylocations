@@ -44,7 +44,9 @@ body, #root { position:absolute; top:0; bottom:0; right:0; left:0; }
     flex-direction: row;
     align-items: center;
 }
-
+.btn:hover, .btn-large:hover, .btn-small:hover {
+    background-color: #6c3af5;
+}
 .material-icons{
     margin-right: 5px;
 }
