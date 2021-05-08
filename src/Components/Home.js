@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Routing from "./Routing";
 import {actionCategories, actionCategoryName, actionViewStatus} from "./actions/actions";
 import {useDispatch, useSelector} from "react-redux";
@@ -12,6 +12,7 @@ export default function Home(props) {
     const categories = useSelector(state => state.categories);
     const locations = useSelector(state => state.locations);
     const categoryName = useSelector(state => state.categoryName);
+
     //To get category name and list specific locations
     const getCategory = (name) => {
         dispatch(actionViewStatus("list"))
@@ -23,31 +24,21 @@ export default function Home(props) {
     const items = categories.map(((category, index) => {
         return (
             <ul className="wrapper" key={category.name}>
-                <li>
-                    <button id="content-btn" className="waves-effect waves-light btn grey"
-                            onClick={() => getCategory(category.name)}>
-                        <div className="card-content">
-                            <span className="card-title">{category.name}</span>
-                        </div>
-                    </button>
-                </li>
+                {getButtonLiElement("content-btn", category.name, () => getCategory(category.name), "", "")}
             </ul>
         )
     }))
 
     //Handlers to view changing
-
     const deleteHandler = (name) => {
         dispatch(actionViewStatus("delete"))
         if (window.confirm(`You are going to delete category ${name}`)) {
             dispatch(actionCategories(categories.filter(category => category.name != name)))
         }
         viewHandler("home");
-
-
     }
     const viewHandler = (view) => {
-        if(view=="home"){
+        if (view == "home") {
             dispatch(actionCategoryName(""));
         }
         dispatch(actionViewStatus(view));
@@ -57,11 +48,11 @@ export default function Home(props) {
             <nav className="nav-main">
                 <div className="nav-wrapper">
                     <ul className="button-group">
-                        {getButtonLiElement("category-btn-back", "home", () => viewHandler("home"), "home", "yellow")}
-                        {view == "home" ? getButtonLiElement("category-btn-back", "new Category", () => viewHandler("add"), "add_circle_outline", "grey") : null}
-                        {view == "list" ? getButtonLiElement("category-btn-back", "edit", () => viewHandler("edit"), "edit", "grey") : null}
-                        {view == "list" ? getButtonLiElement("category-btn-back", "view", () => viewHandler("view"), "view_list", "grey") : null}
-                        {view == "list" ? getButtonLiElement("category-btn-back", "delete", () => deleteHandler(categoryName), "delete_forever", "grey") : null}
+                        {getButtonLiElement("category-btn-back", "home", () => viewHandler("home"), "home", "")}
+                        {view == "home" ? getButtonLiElement("category-btn-menu", "new Category", () => viewHandler("add"), "add_circle_outline", "") : null}
+                        {view == "list" ? getButtonLiElement("category-btn-menu", "edit", () => viewHandler("edit"), "edit", "") : null}
+                        {view == "list" ? getButtonLiElement("category-btn-menu", "view", () => viewHandler("view"), "view_list", "") : null}
+                        {view == "list" ? getButtonLiElement("category-btn-menu", "delete", () => deleteHandler(categoryName), "delete_forever", "") : null}
                     </ul>
                 </div>
                 <div className="nav-logo">
@@ -69,7 +60,7 @@ export default function Home(props) {
                          src={require('../Style/images/logo.png')}/></div>
             </nav>
             {view == "home" || view == "list" ? <div className="main-content">
-                    <h2 className="category-title"> {categoryName?"- Category : " +categoryName+" -":"- Home -"} </h2>
+                    <h2 className="category-title"> {categoryName ? "- Category : " + categoryName + " -" : "- Home -"} </h2>
                     <div className="category-items">
                         {items}
                     </div>
@@ -79,8 +70,8 @@ export default function Home(props) {
                                  src={require('../Style/images/loc2.png')}/>
                         </div>
                         {view == "home" || view == "list" ? <ul className="btn-group">
-                            {getButtonLiElement("category-btn", "categories", () => viewHandler("categories"), "list", "grey")}
-                            {getButtonLiElement("category-btn", "all locations", () => viewHandler("locations"), "location_on", "grey")}
+                            {getButtonLiElement("category-btn-menu", "categories", () => viewHandler("categories"), "list", "")}
+                            {getButtonLiElement("category-btn-menu", "all locations", () => viewHandler("locations"), "location_on", "")}
                         </ul> : null}
                     </AppBar>
                 </div> :

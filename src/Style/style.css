@@ -36,14 +36,18 @@ body, #root { position:absolute; top:0; bottom:0; right:0; left:0; }
     display: flex;
     flex-direction: row;
     align-items: center;
+    background-image: linear-gradient(to top, #fddb92 0%, #d1fdff 100%);
 }
-#category-btn{
-    border-radius: 20px;
+#category-btn-menu {
     margin-right: 15px;
+    color: black;
+    border-radius: 20px;
     display: flex;
     flex-direction: row;
     align-items: center;
+    background-image: linear-gradient(to top, #ebbba7 0%, #cfc7f8 100%);
 }
+
 .btn:hover, .btn-large:hover, .btn-small:hover {
     background-color: #6c3af5;
 }
